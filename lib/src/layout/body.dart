@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:material_portfolio_webapp/src/repository/data.dart'
+    show socials;
+
 import 'package:material_portfolio_webapp/src/widget/self_image_card.dart'
     show SelfImageCard;
 
@@ -18,30 +21,40 @@ class PortfolioBody extends StatefulWidget {
 class _PortfolioBodyState extends State<PortfolioBody> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 960,
-      child: Flex(
-        direction: Axis.horizontal,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Flexible(flex: 3, child: SelfImageCard()),
-          const Spacer(flex: 1),
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 6,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                TypewriterText(),
-                SizedBox(
-                  height: 24.0,
-                ),
-              ],
+    return Center(
+      child: SizedBox(
+        width: 960,
+        child: Flex(
+          direction: Axis.horizontal,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Flexible(flex: 3, child: SelfImageCard()),
+            const Spacer(flex: 1),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 6,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const TypewriterText(),
+                  const SizedBox(height: 24.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: socials
+                        .map((social) => Padding(
+                              padding: const EdgeInsets.only(right: 18.0),
+                              child: SocialSvgEmulatedButton(social: social),
+                            ))
+                        .toList(),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

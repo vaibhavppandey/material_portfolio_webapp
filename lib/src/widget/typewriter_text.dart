@@ -16,6 +16,8 @@ class TypewriterText extends StatelessWidget {
         "I <3 openSource"
       ]
           .map((String text) => TypewriterAnimatedText(text,
+              cursor: '|',
+              speed: const Duration(milliseconds: 90),
               textStyle: GoogleFonts.robotoSlab(
                   textStyle: Theme.of(context).textTheme.displayLarge?.copyWith(
                       color: Theme.of(context).colorScheme.onBackground))))

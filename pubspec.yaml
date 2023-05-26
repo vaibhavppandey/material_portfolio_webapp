@@ -68,6 +68,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/image/self.jpg
+    # svg files
+    - assets/svg/github.svg
+    - assets/svg/discord.svg
+    - assets/svg/outlook.svg
     # json files (temp)
     - assets/json/asset.json
     - assets/json/social.json

@@ -17,19 +17,15 @@ class SocialSvgEmulatedButton extends StatefulWidget {
 class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation _colorAnimation;
+  late CurvedAnimation _curvedAnimation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 250));
-    final CurvedAnimation curvedAnimation = CurvedAnimation(
+    _curvedAnimation = CurvedAnimation(
         parent: _animationController, curve: Curves.easeInOutSine);
-    _colorAnimation = ColorTween(
-            begin: Theme.of(context).colorScheme.onBackground,
-            end: widget.social.color)
-        .animate(curvedAnimation);
   }
 
   @override
@@ -40,6 +36,10 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
 
   @override
   Widget build(BuildContext context) {
+    final Animation colorAnimation = ColorTween(
+            begin: Theme.of(context).colorScheme.onBackground,
+            end: widget.social.color)
+        .animate(_curvedAnimation);
     return MouseRegion(
       onEnter: (_) => _animationController.forward(),
       onExit: (_) => _animationController.reverse(),
@@ -49,11 +49,11 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
         child: AnimatedBuilder(
             animation: _animationController,
             builder: (context, _) => SvgPicture.asset(
-                  "svg/${widget.social.asset}",
+                  "svg/${widget.social.asset}.svg",
                   height: 36,
                   fit: BoxFit.fitHeight,
                   colorFilter:
-                      ColorFilter.mode(_colorAnimation.value, BlendMode.srcIn),
+                      ColorFilter.mode(colorAnimation.value, BlendMode.srcIn),
                 )),
       ),
     );
