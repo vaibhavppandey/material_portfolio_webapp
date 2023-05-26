@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^4.0.5
   flutter_svg: ^2.0.6
   url_launcher: ^6.1.11
+  flutter_native_splash: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,19 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_native_splash:
+  android: false
+  web: true
+  image: "assets/png/splash.png"
+  color: "#191c1e"
+
+flutter_launcher_icons:
+  android: false
+  ios: false
+  image_path: "assets/icon/icon.png"
+  web:
+    generate: true
+    image_path: "assets/icon/icon.png"
 # The following section is specific to Flutter packages.
 flutter:
 
