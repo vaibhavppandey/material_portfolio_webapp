@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:material_portfolio_webapp/src/widget/self_image_card.dart'
     show SelfImageCard;
 
+import 'package:material_portfolio_webapp/src/widget/social_svg_button.dart'
+    show SocialSvgEmulatedButton;
+import 'package:material_portfolio_webapp/src/widget/typewriter_text.dart'
+    show TypewriterText;
+
 class PortfolioBody extends StatefulWidget {
   const PortfolioBody({super.key});
 
@@ -23,13 +28,17 @@ class _PortfolioBodyState extends State<PortfolioBody> {
           const Flexible(flex: 3, child: SelfImageCard()),
           const Spacer(flex: 1),
           Flexible(
+            fit: FlexFit.tight,
             flex: 6,
-            child: Text(
-              "Hello I'm Vaibhav",
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge
-                  ?.copyWith(color: Theme.of(context).colorScheme.onBackground),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TypewriterText(),
+                SizedBox(
+                  height: 24.0,
+                ),
+              ],
             ),
           ),
         ],
