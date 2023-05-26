@@ -1,6 +1,6 @@
 {
-    "name": "mfc_portfolio_webapp",
-    "short_name": "mfc_portfolio_webapp",
+    "name": "material_portfolio_webapp",
+    "short_name": "material_portfolio_webapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
