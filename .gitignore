@@ -45,3 +45,10 @@ app.*.map.json
 
 # no testing
 test
+
+# firebase files
+.firebaserc
+firebase.json
+
+# web build
+/public/

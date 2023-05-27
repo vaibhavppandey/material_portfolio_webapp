@@ -49,7 +49,7 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
         child: AnimatedBuilder(
             animation: _animationController,
             builder: (context, _) => SvgPicture.asset(
-                  "svg/${widget.social.asset}.svg",
+                  "assets/svg/${widget.social.asset}.svg",
                   height: 36,
                   fit: BoxFit.fitHeight,
                   colorFilter:

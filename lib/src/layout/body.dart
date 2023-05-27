@@ -29,11 +29,11 @@ class _PortfolioBodyState extends State<PortfolioBody> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Flexible(flex: 3, child: SelfImageCard()),
+            const Flexible(flex: 7, child: SelfImageCard()),
             const Spacer(flex: 1),
             Flexible(
               fit: FlexFit.tight,
-              flex: 6,
+              flex: 12,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
