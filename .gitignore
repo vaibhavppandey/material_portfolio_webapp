@@ -49,6 +49,7 @@ test
 # firebase files
 .firebaserc
 firebase.json
+/.firebase/
 
 # web build
 /public/

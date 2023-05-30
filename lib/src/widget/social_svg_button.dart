@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:material_portfolio_webapp/src/entity/social.dart';
 
 class SocialSvgEmulatedButton extends StatefulWidget {
-  const SocialSvgEmulatedButton({super.key, required this.social});
+  const SocialSvgEmulatedButton(
+      {super.key, required this.height, required this.social});
 
+  final double height;
   final Social social;
 
   @override
@@ -50,7 +51,7 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
             animation: _animationController,
             builder: (context, _) => SvgPicture.asset(
                   "assets/svg/${widget.social.asset}.svg",
-                  height: 36,
+                  height: widget.height,
                   fit: BoxFit.fitHeight,
                   colorFilter:
                       ColorFilter.mode(colorAnimation.value, BlendMode.srcIn),

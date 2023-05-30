@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:material_portfolio_webapp/src/repository/data.dart'
     show socials;
@@ -11,42 +12,60 @@ import 'package:material_portfolio_webapp/src/widget/social_svg_button.dart'
 import 'package:material_portfolio_webapp/src/widget/typewriter_text.dart'
     show TypewriterText;
 
-class PortfolioBody extends StatefulWidget {
+import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
+    show platformsModelProvider, platformsProvider;
+
+class PortfolioBody extends ConsumerStatefulWidget {
   const PortfolioBody({super.key});
 
   @override
-  State<PortfolioBody> createState() => _PortfolioBodyState();
+  ConsumerState<PortfolioBody> createState() => _PortfolioBodyState();
 }
 
-class _PortfolioBodyState extends State<PortfolioBody> {
+class _PortfolioBodyState extends ConsumerState<PortfolioBody> {
   @override
   Widget build(BuildContext context) {
+    final currentPlatformModel = ref.watch(platformsModelProvider);
+    final platformNotifier = ref.watch(platformsProvider.notifier);
     return Center(
       child: SizedBox(
-        width: 960,
+        width: currentPlatformModel.width,
+        height: currentPlatformModel.height,
         child: Flex(
-          direction: Axis.horizontal,
+          direction: currentPlatformModel.direction,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Flexible(flex: 7, child: SelfImageCard()),
-            const Spacer(flex: 1),
+            Flexible(
+                fit: FlexFit.loose,
+                flex: platformNotifier.isDesktop() ? 7 : 9,
+                child: SelfImageCard(
+                    dimension: platformNotifier.isDesktop()
+                        ? 480
+                        : platformNotifier.isTablet()
+                            ? 360
+                            : 240)),
+            Spacer(flex: platformNotifier.isDesktop() ? 1 : 2),
             Flexible(
               fit: FlexFit.tight,
-              flex: 12,
+              flex: platformNotifier.isDesktop() ? 12 : 9,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const TypewriterText(),
-                  const SizedBox(height: 24.0),
+                  TypewriterText(
+                      textStyle: currentPlatformModel.buildTextStyle(context)),
+                  SizedBox(height: platformNotifier.isDesktop() ? 24.0 : 36.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: socials
                         .map((social) => Padding(
                               padding: const EdgeInsets.only(right: 18.0),
-                              child: SocialSvgEmulatedButton(social: social),
+                              child: SocialSvgEmulatedButton(
+                                social: social,
+                                height: currentPlatformModel.iconSize,
+                              ),
                             ))
                         .toList(),
                   ),

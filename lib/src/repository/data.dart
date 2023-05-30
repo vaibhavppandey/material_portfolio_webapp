@@ -6,11 +6,11 @@ List<Social> socials = <Social>[
   Social(
       asset: "github",
       color: const Color(0xFFFFFFFF),
-      link: Uri.parse("https://large-type.com/#vpp%231032")),
+      link: Uri.parse("https://www.github.com/vaibhavppandey")),
   Social(
       asset: "discord",
       color: const Color(0xFF7289DA),
-      link: Uri.parse("https://www.github.com/vaibhavppandey")),
+      link: Uri.parse("https://large-type.com/#vpp%231032")),
   Social(
       asset: "outlook",
       color: const Color(0xFF0072C6),

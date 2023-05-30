@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TypewriterText extends StatelessWidget {
-  const TypewriterText({super.key});
+  final TextStyle? textStyle;
+  const TypewriterText({super.key, required this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,7 @@ class TypewriterText extends StatelessWidget {
           .map((String text) => TypewriterAnimatedText(text,
               cursor: '|',
               speed: const Duration(milliseconds: 90),
-              textStyle: GoogleFonts.robotoSlab(
-                  textStyle: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground))))
+              textStyle: GoogleFonts.robotoSlab(textStyle: textStyle)))
           .toList(),
     );
   }

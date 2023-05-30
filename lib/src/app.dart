@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:material_portfolio_webapp/src/_trash/hello_widget.dart';
 import 'package:material_portfolio_webapp/src/layout/body.dart'
     show PortfolioBody;
+
+import 'package:material_portfolio_webapp/src/theme/color.dart';
+import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
+    show platformsProvider;
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
 
-  static const Color _websiteM3SeedColor = Colors.blueGrey;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vaibhav P.',
+      initialRoute: '/',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: _websiteM3SeedColor),
+        colorScheme: ColorScheme.fromSeed(seedColor: kMaterialSeedColor),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: _websiteM3SeedColor, brightness: Brightness.dark),
+            seedColor: kMaterialSeedColor, brightness: Brightness.dark),
       ),
       themeMode: ThemeMode.dark,
-      home: const Scaffold(
-        body: PortfolioBody(),
-      ),
+      home: Scaffold(body: Consumer(builder: (context, ref, _) {
+        Future.microtask(() => ref
+            .read(platformsProvider.notifier)
+            .setCurrentPltaform(MediaQuery.of(context).size));
+        return const PortfolioBody();
+      })),
     );
   }
 }

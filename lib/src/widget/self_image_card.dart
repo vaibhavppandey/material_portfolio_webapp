@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SelfImageCard extends StatelessWidget {
-  const SelfImageCard({super.key});
+class SelfImageCard extends ConsumerWidget {
+  const SelfImageCard({super.key, required this.dimension});
 
+  final double dimension;
   static const String _imageAssetPath = "assets/image/self.jpg";
 
   @override
-  Widget build(BuildContext context) {
-    return const SizedBox.square(
-      dimension: 480,
-      child: DecoratedBox(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox.square(
+      dimension: dimension,
+      child: const DecoratedBox(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
