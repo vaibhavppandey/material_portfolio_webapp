@@ -11,14 +11,14 @@ import 'package:material_portfolio_webapp/src/util/platform/abstract_platform.da
     show Platform;
 
 class PlatformsProvider extends StateNotifier<Platforms> {
-  PlatformsProvider() : super(Platforms.desktop);
+  PlatformsProvider() : super(Platforms.mobile);
 
   void setCurrentPltaform(Size size) {
     if (size.width >= 1024) {
       state = Platforms.desktop;
     } else if (size.width >= 768) {
       state = Platforms.tablet;
-    } else if (size.width >= 480) {
+    } else if (size.width >= 360) {
       state = Platforms.mobile;
     } else {
       state = Platforms.small;

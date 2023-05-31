@@ -36,6 +36,7 @@ class _PortfolioBodyState extends ConsumerState<PortfolioBody> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            // if (platformNotifier.isMobile()) const Spacer(flex: 1),
             Flexible(
                 fit: FlexFit.loose,
                 flex: platformNotifier.isDesktop() ? 7 : 9,

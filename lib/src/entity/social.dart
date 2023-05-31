@@ -4,9 +4,15 @@ import 'package:flutter/material.dart' show Color;
 class Social {
   final String asset;
   final Color color;
-  final Uri link;
+  final String payload;
+  final String type;
 
-  const Social({required this.asset, required this.color, required this.link});
+  const Social({
+    required this.asset,
+    required this.color,
+    required this.payload,
+    required this.type,
+  });
 
   factory Social.fromJson(Map<String, dynamic> json) {
     Color colorFromHexString(String hexColor) {
@@ -16,6 +22,7 @@ class Social {
     return Social(
         asset: json["asset"],
         color: colorFromHexString(json["color"]),
-        link: Uri.parse(json["link"]));
+        payload: json["link"],
+        type: json["type"]);
   }
 }

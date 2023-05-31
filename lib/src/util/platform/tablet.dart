@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_portfolio_webapp/src/util/platform/abstract_platform.dart';
 
 const double _height = 720;
-const double _iconSize = 36;
+const double _iconSize = 32;
 const Axis _direction = Axis.vertical;
 
 class Tablet implements Platform {
