@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:material_portfolio_webapp/src/widget/self_image_card.dart'
     show SelfImageCard;
-
 import 'package:material_portfolio_webapp/src/widget/social_svg_button.dart'
     show SocialSvgEmulatedButton;
 import 'package:material_portfolio_webapp/src/widget/typewriter_text.dart'
@@ -15,7 +14,6 @@ import 'package:material_portfolio_webapp/src/repository/assets_repository.dart'
 
 import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
     show platformsModelProvider, platformsProvider;
-
 import 'package:material_portfolio_webapp/src/provider/assets_provider.dart'
     show assetsProvider;
 
@@ -32,17 +30,20 @@ class _PortfolioBodyState extends ConsumerState<PortfolioBody> {
     final currentPlatformModel = ref.watch(platformsModelProvider);
     final platformNotifier = ref.watch(platformsProvider.notifier);
     AsyncValue<AssetsRepository> assetRepo = ref.watch(assetsProvider);
-    return assetRepo.when(
-      error: (error, _) => Text(error.toString(),
-          style: GoogleFonts.robotoSlab(
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .headlineLarge
-                  ?.copyWith(color: Theme.of(context).colorScheme.error))),
-      loading: () => const SizedBox.square(
-          dimension: 48, child: CircularProgressIndicator()),
-      data: (repo) => Center(
-        child: SizedBox(
+    return Center(
+      child: assetRepo.when(
+        error: (error, _) => Text(error.toString(),
+            style: GoogleFonts.robotoSlab(
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.error))),
+        loading: () => SizedBox.square(
+            dimension: 64,
+            child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.onBackground,
+            )),
+        data: (repo) => SizedBox(
           width: currentPlatformModel.width,
           height: currentPlatformModel.height,
           child: Flex(
@@ -72,20 +73,18 @@ class _PortfolioBodyState extends ConsumerState<PortfolioBody> {
                         textStyle:
                             currentPlatformModel.buildTextStyle(context)),
                     SizedBox(
-                        height: platformNotifier.isDesktop() ? 24.0 : 36.0),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                        height: platformNotifier.isDesktop() ? 36.0 : 48.0),
+                    Wrap(
+                      spacing: platformNotifier.isDesktop() ? 36.0 : 18.0,
+                      runSpacing: platformNotifier.isDesktop() ? 18.0 : 12.0,
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: repo.socials
-                          .map((social) => Padding(
-                                padding: EdgeInsets.only(
-                                    right: platformNotifier.isDesktop()
-                                        ? 36.0
-                                        : 18.0),
-                                child: SocialSvgEmulatedButton(
-                                  social: social,
-                                  height: currentPlatformModel.iconSize,
-                                ),
+                          .map((social) => SocialSvgEmulatedButton(
+                                social: social,
+                                height: currentPlatformModel.iconSize,
                               ))
                           .toList(),
                     ),

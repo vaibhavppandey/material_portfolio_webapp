@@ -9,16 +9,20 @@ class SelfImageCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox.square(
-      dimension: dimension,
-      child: const DecoratedBox(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: AssetImage(_imageAssetPath),
-            fit: BoxFit.cover,
-            filterQuality: FilterQuality.high,
-            isAntiAlias: true,
+    return AnimatedSize(
+      clipBehavior: Clip.none,
+      duration: const Duration(milliseconds: 250),
+      child: SizedBox.square(
+        dimension: dimension,
+        child: const DecoratedBox(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage(_imageAssetPath),
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+              isAntiAlias: true,
+            ),
           ),
         ),
       ),

@@ -3,6 +3,7 @@
 *.log
 *.pyc
 *.swp
+*.lock
 .DS_Store
 .atom/
 .buildlog/
@@ -45,6 +46,9 @@ app.*.map.json
 
 # no testing
 test
+#trash
+**/_trash
+model/
 
 # firebase files
 .firebaserc

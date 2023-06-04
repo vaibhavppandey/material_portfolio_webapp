@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 String _buildEmail(String payload) =>
     "mailto:$payload?subject=Hello%20G&body=Nigga%20wanna%20see%20me%20fall";
 
-void handlePayload(String payload, BuildContext context, SnackBar snackBar) {
-  switch (payload) {
+void handlePayload(
+    String type, String payload, BuildContext context, SnackBar snackBar) {
+  switch (type) {
     case "link":
       launchUrl(Uri.parse(payload));
       break;

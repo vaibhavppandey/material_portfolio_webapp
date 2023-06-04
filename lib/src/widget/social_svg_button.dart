@@ -6,9 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:material_portfolio_webapp/src/entity/social.dart';
 import 'package:material_portfolio_webapp/src/util/func/handle_payload.dart';
+import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
+    show PlatformsProvider;
 
 import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
     show platformsProvider;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SocialSvgEmulatedButton extends ConsumerStatefulWidget {
   const SocialSvgEmulatedButton(
@@ -51,34 +55,41 @@ class _SocialSvgEmulatedButtonState
         .animate(_curvedAnimation);
 
     final platformProvider = ref.watch(platformsProvider.notifier);
-    final Widget finalWidget = buildWidget(colorAnimation);
-    return platformProvider.isDesktop()
-        ? finalWidget
-        : Tooltip(
-            message: widget.social.asset,
-            margin: const EdgeInsets.only(top: 8.0),
-            textStyle: GoogleFonts.robotoSlab(
-                textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.background)),
-            child: finalWidget,
-          );
-  }
-
-  Widget buildWidget(Animation colorAnimation) {
+    final Widget finalWidget = buildWidget(colorAnimation, platformProvider);
     return AnimatedSize(
       clipBehavior: Clip.none,
       duration: const Duration(milliseconds: 250),
-      child: MouseRegion(
-        onEnter: (_) => _animationController.forward(),
-        onExit: (_) => _animationController.reverse(),
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () =>
-              handlePayload(widget.social.payload, context, _buildSnackbar()),
-          child: AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, _) => _buildSvgAsset(colorAnimation)),
-        ),
+      child: platformProvider.isDesktop()
+          ? finalWidget
+          : Tooltip(
+              message: widget.social.asset,
+              margin: const EdgeInsets.only(top: 8.0),
+              textStyle: GoogleFonts.robotoSlab(
+                  textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.background)),
+              child: finalWidget,
+            ),
+    );
+  }
+
+  Widget buildWidget(
+      Animation colorAnimation, PlatformsProvider platformsProvider) {
+    return MouseRegion(
+      onEnter: (_) => _animationController.forward(),
+      onExit: (_) => _animationController.reverse(),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onLongPressDown: (_) => platformsProvider.isMobile()
+            ? _animationController.forward()
+            : () => null,
+        onLongPressUp: () => platformsProvider.isMobile()
+            ? _animationController.reverse()
+            : () => null,
+        onTap: () => handlePayload(widget.social.type, widget.social.payload,
+            context, _buildSnackbar("ID copied :D")),
+        child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, _) => _buildSvgAsset(colorAnimation)),
       ),
     );
   }
@@ -90,9 +101,20 @@ class _SocialSvgEmulatedButtonState
         colorFilter: ColorFilter.mode(colorAnimation.value, BlendMode.srcIn),
       );
 
-  SnackBar _buildSnackbar() => const SnackBar(
-        content: Text("Id has been copied to clipboard"),
+  SnackBar _buildSnackbar(String text) => SnackBar(
+        content: Text(text),
         behavior: SnackBarBehavior.floating,
         clipBehavior: Clip.antiAlias,
+        action: SnackBarAction(
+          label: "Open",
+          textColor: Theme.of(context).colorScheme.inversePrimary,
+          onPressed: () async {
+            if (await canLaunchUrl(Uri.parse("discord://"))) {
+              launchUrlString("discord://");
+            } else {
+              launchUrlString("https://discord.com/");
+            }
+          },
+        ),
       );
 }
