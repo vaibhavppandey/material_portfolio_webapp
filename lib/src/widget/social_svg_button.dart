@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:material_portfolio_webapp/src/entity/social.dart';
+import 'package:material_portfolio_webapp/src/util/func/handle_payload.dart';
 
-class SocialSvgEmulatedButton extends StatefulWidget {
+import 'package:material_portfolio_webapp/src/provider/platforms_provider.dart'
+    show platformsProvider;
+
+class SocialSvgEmulatedButton extends ConsumerStatefulWidget {
   const SocialSvgEmulatedButton(
       {super.key, required this.height, required this.social});
 
@@ -16,11 +18,12 @@ class SocialSvgEmulatedButton extends StatefulWidget {
   final Social social;
 
   @override
-  State<SocialSvgEmulatedButton> createState() =>
+  ConsumerState<SocialSvgEmulatedButton> createState() =>
       _SocialSvgEmulatedButtonState();
 }
 
-class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
+class _SocialSvgEmulatedButtonState
+    extends ConsumerState<SocialSvgEmulatedButton>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late CurvedAnimation _curvedAnimation;
@@ -46,27 +49,35 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
             begin: Theme.of(context).colorScheme.onBackground,
             end: widget.social.color)
         .animate(_curvedAnimation);
-    return Tooltip(
-      message: widget.social.asset,
-      margin: const EdgeInsets.only(top: 8.0),
-      textStyle: GoogleFonts.robotoSlab(
-          textStyle: Theme.of(context)
-              .textTheme
-              .labelMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.background)),
-      child: AnimatedSize(
-        clipBehavior: Clip.none,
-        duration: const Duration(milliseconds: 250),
-        child: MouseRegion(
-          onEnter: (_) => _animationController.forward(),
-          onExit: (_) => _animationController.reverse(),
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => _handlePayload(),
-            child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, _) => _buildSvgAsset(colorAnimation)),
-          ),
+
+    final platformProvider = ref.watch(platformsProvider.notifier);
+    final Widget finalWidget = buildWidget(colorAnimation);
+    return platformProvider.isDesktop()
+        ? finalWidget
+        : Tooltip(
+            message: widget.social.asset,
+            margin: const EdgeInsets.only(top: 8.0),
+            textStyle: GoogleFonts.robotoSlab(
+                textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.background)),
+            child: finalWidget,
+          );
+  }
+
+  Widget buildWidget(Animation colorAnimation) {
+    return AnimatedSize(
+      clipBehavior: Clip.none,
+      duration: const Duration(milliseconds: 250),
+      child: MouseRegion(
+        onEnter: (_) => _animationController.forward(),
+        onExit: (_) => _animationController.reverse(),
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () =>
+              handlePayload(widget.social.payload, context, _buildSnackbar()),
+          child: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, _) => _buildSvgAsset(colorAnimation)),
         ),
       ),
     );
@@ -78,26 +89,10 @@ class _SocialSvgEmulatedButtonState extends State<SocialSvgEmulatedButton>
         fit: BoxFit.fitHeight,
         colorFilter: ColorFilter.mode(colorAnimation.value, BlendMode.srcIn),
       );
-  void _handlePayload() {
-    final payload = widget.social.payload;
-    switch (widget.social.type) {
-      case "link":
-        launchUrl(Uri.parse(payload));
-        break;
-      case "mail":
-        launchUrlString(
-            "mailto:$payload?subject=Hello%20G&body=Nigga%20wanna%20see%20me%20fall");
-        break;
-      default:
-        Clipboard.setData(ClipboardData(text: payload));
-        ScaffoldMessenger.of(context)
-            .showSnackBar(_buildSnackbar("Discord copied to clipboard!"));
-        break;
-    }
-  }
 
-  SnackBar _buildSnackbar(String text) => SnackBar(
-        content: Text(text),
+  SnackBar _buildSnackbar() => const SnackBar(
+        content: Text("Id has been copied to clipboard"),
+        behavior: SnackBarBehavior.floating,
         clipBehavior: Clip.antiAlias,
       );
 }

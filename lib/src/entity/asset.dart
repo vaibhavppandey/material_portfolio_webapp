@@ -1,13 +1,14 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'asset.g.dart';
+
+@JsonSerializable()
 class Asset {
   final String image;
-  final List<String> texts;
+  final List<String> text;
 
-  const Asset({required this.image, required this.texts});
+  Asset(this.image, this.text);
 
-  factory Asset.fromJson(Map<String, dynamic> json) {
-    return Asset(
-      image: json["image"],
-      texts: json["texts"].map((text) => text.toString()).toList(),
-    );
-  }
+  factory Asset.fromJson(Map<String, dynamic> json) => _$AssetFromJson(json);
+  Map<String, dynamic> toJson() => _$AssetToJson(this);
 }

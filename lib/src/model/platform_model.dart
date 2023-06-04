@@ -3,7 +3,7 @@ import 'package:material_portfolio_webapp/src/util/platform/desktop.dart';
 import 'package:material_portfolio_webapp/src/util/platform/mobile.dart';
 import 'package:material_portfolio_webapp/src/util/platform/tablet.dart';
 import 'package:material_portfolio_webapp/src/util/platform/small.dart';
-import 'package:material_portfolio_webapp/src/util/platforms.dart'
+import 'package:material_portfolio_webapp/src/util/platform/platforms.dart'
     show Platforms;
 import 'package:material_portfolio_webapp/src/util/platform/abstract_platform.dart'
     show Platform;

@@ -1,5 +1,5 @@
 [
-    {"asset": "discord", "color": "#7289da", "link": "https://large-type.com/#vpp%231032"},
-    {"asset": "github", "color": "#ffffff", "link": "https://github.com/vaibhavppandey"},
-    {"asset": "outlook", "color": "#0072c6", "link": "https://large-type.com/#vaibhav.ppandey%40outlook.com"}
+    {"asset": "discord", "color": "#7289da", "payload": "vpp#1032", "type": "text"},
+    {"asset": "github", "color": "#ffffff", "payload": "https://github.com/vaibhavppandey", "type": "link"},
+    {"asset": "outlook", "color": "#0072c6", "payload": "vaibhav.ppandey@outlook.com", "type": "mail"}
 ]

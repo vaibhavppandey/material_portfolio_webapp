@@ -16,13 +16,13 @@ class Social {
 
   factory Social.fromJson(Map<String, dynamic> json) {
     Color colorFromHexString(String hexColor) {
-      return Color(int.parse("FF${hexColor..replaceAll('#', '')}", radix: 16));
+      return Color(int.parse("FF${hexColor.replaceAll('#', '')}", radix: 16));
     }
 
     return Social(
-        asset: json["asset"],
+        asset: json["asset"] as String,
         color: colorFromHexString(json["color"]),
-        payload: json["link"],
-        type: json["type"]);
+        payload: json["payload"] as String,
+        type: json["type"] as String);
   }
 }

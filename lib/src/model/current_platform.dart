@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show ChangeNotifier, Size;
-import 'package:material_portfolio_webapp/src/util/platforms.dart'
+import 'package:material_portfolio_webapp/src/util/platform/platforms.dart'
     show Platforms;
 
 class CurrentPlatform with ChangeNotifier {

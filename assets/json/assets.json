@@ -1,0 +1,15 @@
+{
+    "asset": {
+        "image": "assets/image/self.jpg",
+        "text": [
+        "Hello I'm Vaibhav",
+        "I am into Flutter",
+        "I <3 openSource"
+        ]
+    },
+    "social": [
+        {"asset": "discord", "color": "#7289da", "payload": "vpp#1032", "type": "text"},
+        {"asset": "github", "color": "#ffffff", "payload": "https://github.com/vaibhavppandey", "type": "link"},
+        {"asset": "outlook", "color": "#0072c6", "payload": "vaibhav.ppandey@outlook.com", "type": "mail"}
+    ]
+} 

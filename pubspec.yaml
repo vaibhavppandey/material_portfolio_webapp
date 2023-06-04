@@ -44,6 +44,9 @@ dependencies:
   provider: ^6.0.5
   logger: ^1.3.0
   flutter_riverpod: ^2.3.6
+  json_serializable: ^6.7.0
+  json_annotation: ^4.8.1
+  build_runner: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -91,7 +94,7 @@ flutter:
     - assets/svg/discord.svg
     - assets/svg/outlook.svg
     # json files (temp)
-    - assets/json/asset.json
+    - assets/json/assets.json
     - assets/json/social.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
