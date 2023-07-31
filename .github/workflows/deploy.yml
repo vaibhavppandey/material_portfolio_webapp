@@ -21,7 +21,7 @@ jobs:
             flutter pub get
             flutter build web $FLUTTER_OPTIONS
         - name: upload webapp artifact 
-          uses: actions/upload-artifacts@v3
+          uses: actions/upload-artifact@v3
           with:
             name: webapp artifacts
             path: build/web
@@ -33,7 +33,7 @@ jobs:
 
       steps:
         - name: download webapp artifact
-          uses: actions/download-artifacts@v3
+          uses: actions/download-artifact@v3
           with:
             name: webapp artifacts
             path: public
