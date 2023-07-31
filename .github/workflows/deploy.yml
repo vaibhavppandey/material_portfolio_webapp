@@ -1,0 +1,45 @@
+name: Deploy to gh-pages
+on:
+    pull_request:
+        types: [labeled]
+env:
+    FLUTTER_OPTIONS: --release
+
+jobs:
+    build:
+      if: contains(github.event.pull_request.labels.*.name, 'deploy')
+
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+        - uses: subosito/flutter-action@v2
+          with:
+            channel: 'stable'
+        - name: run and build flutter webapp
+          run: |
+            flutter pub get
+            flutter build web $FLUTTER_OPTIONS
+        - name: upload webapp artifact 
+          uses: actions/upload-artifacts@v3
+          with:
+            name: webapp artifacts
+            path: build/web
+
+    deploy-to-gh_pages:
+      needs: build
+
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: download webapp artifact
+          uses: actions/download-artifacts@v3
+          with:
+            name: webapp artifacts
+            path: public
+        - name: deoploy to gh-pages
+          uses: peaceiris/actions-gh-pages@v3
+          if: github.ref == 'refs/heads/master'
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./public
