@@ -1,13 +1,14 @@
 name: Deploy to gh-pages
 on:
+    workflow_dispatch:
     pull_request:
         types: [labeled]
 env:
-    FLUTTER_OPTIONS: --release
+    FLUTTER_OPTIONS: --release --output public/
 
 jobs:
     build:
-      if: contains(github.event.pull_request.labels.*.name, 'deploy')
+      if: contains(github.event.pull_request.labels.*.name, 'stage deploy')
 
       runs-on: ubuntu-latest
 
@@ -24,9 +25,9 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: webapp artifacts
-            path: build/web
+            path: public
 
-    deploy-to-gh_pages:
+    deploy-to-firebase:
       needs: build
 
       runs-on: ubuntu-latest
@@ -37,8 +38,9 @@ jobs:
           with:
             name: webapp artifacts
             path: public
-        - name: deoploy to gh-pages
-          uses: peaceiris/actions-gh-pages@v3
+        - name: deploy to firebase hosting
+          uses: w9jds/firebase-action@master
           with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./public
+            args: deploy --only hosting  --interactive --message \"${{ github.event.head_commit.message }}\"
+          env:
+            GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
