@@ -92,6 +92,7 @@ flutter:
     - assets/svg/github.svg
     - assets/svg/discord.svg
     - assets/svg/outlook.svg
+    - assets/svg/hashnode.svg
     # json files (temp)
     - assets/json/assets.json
 

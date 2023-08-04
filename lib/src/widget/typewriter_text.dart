@@ -4,13 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TypewriterText extends StatelessWidget {
   final TextStyle? textStyle;
-  const TypewriterText({super.key, required this.textStyle});
-
-  static const _texts = [
-    "Hello I'm Vaibhav",
-    "I am into Flutter",
-    "I <3 openSource"
-  ];
+  final List<String> texts;
+  const TypewriterText(
+      {super.key, required this.textStyle, required this.texts});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class TypewriterText extends StatelessWidget {
       pause: const Duration(milliseconds: 1200),
       repeatForever: true,
       animatedTexts:
-          _texts.map((String text) => _buildAnimatedText(text)).toList(),
+          texts.map((String text) => _buildAnimatedText(text)).toList(),
     );
   }
 

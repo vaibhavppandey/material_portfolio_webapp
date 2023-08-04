@@ -21,7 +21,7 @@ jobs:
           run: |
             flutter pub get
             flutter build web $FLUTTER_OPTIONS
-            cp firebase.json public/
+            cp assets/json/firebase.json public/
         - name: upload webapp artifact 
           uses: actions/upload-artifact@v3
           with:
