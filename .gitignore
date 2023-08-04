@@ -52,7 +52,7 @@ model/
 
 # firebase files
 .firebaserc
-firebase.json
+# firebase.json  # include to deploy @ github-actions
 /.firebase/
 
 # web build

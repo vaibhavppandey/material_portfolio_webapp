@@ -105,6 +105,7 @@ class _SocialSvgEmulatedButtonState
         content: Text(text),
         behavior: SnackBarBehavior.floating,
         clipBehavior: Clip.antiAlias,
+        width: 256,
         action: SnackBarAction(
           label: "Open",
           textColor: Theme.of(context).colorScheme.inversePrimary,

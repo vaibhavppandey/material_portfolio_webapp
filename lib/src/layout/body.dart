@@ -70,6 +70,7 @@ class _PortfolioBodyState extends ConsumerState<PortfolioBody> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     TypewriterText(
+                        texts: repo.asset.text,
                         textStyle:
                             currentPlatformModel.buildTextStyle(context)),
                     SizedBox(
